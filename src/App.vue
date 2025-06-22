@@ -56,14 +56,14 @@ const checkPassword = () => {
 </script>
 
 <style scoped>
-/* 遮罩层样式 */
+/* 遮罩层样式 - 纯黑色 */
 .password-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  background: #000; /* 纯黑色 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,6 +78,23 @@ const checkPassword = () => {
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   min-width: 300px;
+  /* 添加边框和发光效果 */
+  border: 1px solid #42b983;
+  box-shadow: 0 0 15px rgba(66, 185, 131, 0.5);
+  /* 添加过渡动画 */
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 10px rgba(66, 185, 131, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(66, 185, 131, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(66, 185, 131, 0.5);
+  }
 }
 
 .password-box input {
