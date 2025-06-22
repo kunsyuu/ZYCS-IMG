@@ -22,40 +22,35 @@
 import Header from '@/components/Header/Header.vue';
 import Footer from '@/components/Footer/Footer.vue';
 import { Toaster } from '@/components/ui/toast';
-</script>
-<script>
-export default {
-  name: 'Home',
-  data() {
-    return {
-      verified: false,          // 验证状态
-      inputPassword: '',        // 用户输入的密码
-      error: '',                // 错误信息
-      correctPassword: '12345' // 硬编码的正确密码（实际使用请更换）
-    }
-  },
-  mounted() {
-    // 检查本地存储是否已有验证
-    const saved = localStorage.getItem('passwordVerified')
-    if (saved === 'true') {
-      this.verified = true
-    }
-  },
-  methods: {
-    checkPassword() {
-      if (this.inputPassword === this.correctPassword) {
-        this.verified = true
-        this.error = ''
-        // 存储验证状态（24小时内有效）
-        localStorage.setItem('passwordVerified', 'true')
-        setTimeout(() => {
-          localStorage.removeItem('passwordVerified')
-        }, 24 * 60 * 60 * 1000) // 24小时后过期
-      } else {
-        this.error = '密码错误，请重新输入'
-        this.inputPassword = ''
-      }
-    }
+import { ref, onMounted } from 'vue'
+
+// 响应式变量
+const verified = ref(false)
+const inputPassword = ref('')
+const error = ref('')
+const correctPassword = '5211314' // 硬编码的正确密码
+
+// 检查本地存储是否已有验证
+onMounted(() => {
+  const saved = localStorage.getItem('passwordVerified')
+  if (saved === 'true') {
+    verified.value = true
+  }
+})
+
+// 验证密码方法
+const checkPassword = () => {
+  if (inputPassword.value === correctPassword) {
+    verified.value = true
+    error.value = ''
+    // 存储验证状态（24小时内有效）
+    localStorage.setItem('passwordVerified', 'true')
+    setTimeout(() => {
+      localStorage.removeItem('passwordVerified')
+    }, 24 * 60 * 60 * 1000) // 24小时后过期
+  } else {
+    error.value = '密码错误，请重新输入'
+    inputPassword.value = ''
   }
 }
 </script>
@@ -82,6 +77,7 @@ export default {
   border-radius: 8px;
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 300px;
 }
 
 .password-box input {
